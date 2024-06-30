@@ -1,3 +1,7 @@
 # arm_test
-run_tests为调用perf脚本的自动化脚本，目的在于分别测试每个测试项
-count_perf为处理run_tests输出文件的Python脚本，将测试结果统计为Excel
+install.sh为Prometheus安装脚本、进行make test 并保存结果、最后调用run_tests进行perf测试
+run_tests.sh为调用perf脚本的自动化脚本，目的在于分别测试每个测试项
+count_perf.sh为处理run_tests输出文件的Python脚本，将测试结果统计为Excel
+performance_counter_920.sh为perf脚本
+install-benchmark.sh为Prometheus-Benchmark安装脚本，并在安装之后运行Benchmark
+kind-config.yaml为使用kind创建k8s集群时的配置文件
