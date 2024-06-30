@@ -66,9 +66,31 @@ if [ ! -d "/usr/local/bin/kind" ]; then
     curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.12.0/kind-linux-arm64
     check_command "curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.12.0/kind-linux-arm64"
     chmod +x -R .
-    sudo mv ./kind /usr/local/bin/kind
+    sudo mv ./kind /usr/local/bin/
 else
     log "kind已经下载，跳过此步骤."
+fi
+
+# 安装 kubectl
+log "开始下载kubectl
+if [ ! -d "/usr/local/bin/kubectl" ]; then
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
+    check_command "curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl""
+    chmod +x kubectl
+    sudo mv kubectl /usr/local/bin/
+else
+    log "kubectl已经下载，跳过此步骤."
+fi
+
+# 安装 helm3
+log "开始下载helm..."
+if [ ! -d "/usr/local/bin/helm" ]; then
+    curl -LO https://get.helm.sh/helm-v3.15.2-linux-arm64.tar.gz
+    check_command "curl -LO https://get.helm.sh/helm-v3.15.2-linux-arm64.tar.gz"
+    tar -zxvf helm-v3.15.2-linux-arm64.tar.gz
+    sudo mv linux-arm64/helm /usr/local/bin/
+else
+    log "helm已经下载，跳过此步骤."
 fi
 
 log"下载自动化脚本"
