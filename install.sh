@@ -97,15 +97,19 @@ cd prometheus || error_exit "Failed to change directory to Prometheus."
 go install golang.org/x/tools/cmd/goyacc
 check_command "go install golang.org/x/tools/cmd/goyacc"
 log "goyacc 安装完成."
+
 log"下载自动化脚本"
-cd ..
-git clone https://github.com/Huang-zic/arm_test.git
-check_command"git clone https://github.com/Huang-zic/arm_test.git"
-log"自动化脚本下载成功"
-#将脚本移动到指定目录中
-mov /home/cloud3/arm_test/install.sh  /home/cloud3
-mov /home/cloud3/arm_test/run_tests.sh /home/cloud3/prometheus
-mov /home/cloud3/arm_test/performance_counter_920.sh /home/cloud3/prometheus
+if [ ! -d "arm_test" ]; then
+    git clone https://github.com/Huang-zic/arm_test.git
+    check_command "git clone https://github.com/Huang-zic/arm_test.git"
+    chmod +x -R .
+    log"自动化脚本下载成功"
+else
+    log "脚本已经下载，跳过此步骤."
+fi
+log"将脚本移动到指定目录中"
+mv /home/cloud3/arm_test/run_tests.sh /home/cloud3/prometheus
+mv /home/cloud3/arm_test/performance_counter_920.sh /home/cloud3/prometheus
 chmod +x -R .
 log"赋予执行权限"
 cd /home/cloud3/prometheus
