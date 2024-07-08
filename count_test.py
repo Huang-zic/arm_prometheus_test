@@ -1,4 +1,3 @@
-from msilib.schema import File
 import os
 import pandas as pd
 
@@ -7,6 +6,8 @@ count={}
 def process_txt_file(file_path,test_name):
     with open(file_path, 'r',errors='ignore') as file:
         lines=file.readlines()
+        if(len(lines)<6):
+            print("go test error or no tests\n","file_path:",file_path,"\ntest_name:",test_name)
         if(count[test_name]>1):
             name=lines[-2].strip()+lines[-1].strip()
         else:
@@ -63,7 +64,7 @@ def main(input_directory, output_file):
     df.to_excel(output_file, index=False)
 
 if __name__ == "__main__":
-    input_directory = '\test'  # Change to your directory
+    input_directory = 'test'  # Change to your directory
     output_file = 'test_result.xlsx'
     main(input_directory, output_file)
 
