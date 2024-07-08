@@ -54,8 +54,6 @@ def main(input_directory, output_file):
             if file_data:
                 for i in range(len(file_data)):
                     all_data.append(file_data[i])
-    print(len(all_data),len(all_data[0]))
-    print(all_data[0])
     # Create a DataFrame
     columns = ['Test Name','Status','Run Details']
     df = pd.DataFrame(all_data, columns=columns)
