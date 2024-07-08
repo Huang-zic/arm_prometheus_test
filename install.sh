@@ -45,17 +45,17 @@ else
 fi
 
 
-export PATH=$PATH:/home/cloud3/go_golang/go/bin
+export PATH=$PATH:./go_golang/go/bin
 log "Go 安装完成."
 
 log "赋予go执行权限"
-chmod +x /home/cloud3/go_golang/go/bin/go
+chmod +x ./go_golang/go/bin/go
 # 设置 GOROOT 和 GOPATH
 log "设置 Go 环境变量..."
 go env -w GOROOT=/home/cloud3/go_golang/go
-check_command "go env -w GOROOT=/home/cloud3/go_golang/go"
-go env -w GOPATH=/home/cloud3/go_golang/golang 
-check_command "go env -w GOPATH=/home/cloud3/go_golang/golang "
+check_command "go env -w GOROOT=./go_golang/go"
+go env -w GOPATH=./go_golang/golang 
+check_command "go env -w GOPATH=./go_golang/golang "
 log "Go 环境变量设置完成."
 
 # 安装 Node.js 和 npm
@@ -99,24 +99,23 @@ check_command "go install golang.org/x/tools/cmd/goyacc"
 log "goyacc 安装完成."
 
 #将脚本移动到指定目录中
-mv /home/cloud3/arm_prometheus_test/install.sh  /home/cloud3
-mv /home/cloud3/arm_prometheus_test/run_tests.sh /home/cloud3/prometheus
-mv /home/cloud3/arm_prometheus_test/performance_counter_920.sh /home/cloud3/prometheus
-mv /home/cloud3/arm_prometheus_test/count_test.py /home/cloud3/prometheus
-mv /home/cloud3/arm_prometheus_test/count_perf.py /home/cloud3/prometheus
-log"赋予执行权限"
+mv run_tests.sh ./prometheus
+mv performance_counter_920.sh ./prometheus
+mv count_test.py ./prometheus
+mv count_perf.py ./prometheus
+log "赋予执行权限"
 chmod +x -R .
 
-log"进入Prometheus目录"
-cd /home/cloud3/prometheus
+log "进入Prometheus目录"
+cd prometheus
 
-log"进行test和perf测试"
+log "进行test和perf测试"
 ./run_tests.sh
 
-log"测试完成，使用Python脚本进行统计，安装依赖包"
+log "测试完成，使用Python脚本进行统计，安装依赖包"
 pip3 install os
 pip3 install pandas
 pip3 install openpyxl
-log"依赖安装成功，开始统计"
+log "依赖安装成功，开始统计"
 python count_test.py
 python count_perf.py

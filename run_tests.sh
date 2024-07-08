@@ -4,8 +4,8 @@
 
 
 ROOT_DIR=.
-OUTPUT_DIR_Perf=/home/cloud3/prometheus/perf
-OUTPUT_DIR_Test=/home/cloud3/prometheus/test_r
+OUTPUT_DIR_Perf=./perf
+OUTPUT_DIR_Test=./test
 #删除已有输出结果
 rm -rf perf
 rm -rf test_r

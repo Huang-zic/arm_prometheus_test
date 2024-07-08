@@ -61,6 +61,6 @@ def main(input_directory, output_file):
     df.to_excel(output_file, index=False)
 
 if __name__ == "__main__":
-    input_directory = 'D:\MyProject\插值计算\插值计算\perf'  # Change to your directory
+    input_directory = '\perf'  # Change to your directory
     output_file = 'perf_result.xlsx'
     main(input_directory, output_file)
