@@ -1,27 +1,27 @@
 #!/bin/sh
 
-# ¼ì²é²ÎÊý
+# æ£€æŸ¥å‚æ•°
 
 
 ROOT_DIR=.
-OUTPUT_DIR_Perf=./perf
-OUTPUT_DIR_Test=./test
-#É¾³ýÒÑÓÐÊä³ö½á¹û
+OUTPUT_DIR_Perf=perf
+OUTPUT_DIR_Test=test
+#åˆ é™¤å·²æœ‰è¾“å‡ºç»“æžœ
 rm -rf perf
 rm -rf test_r
-# ´´½¨Êä³öÄ¿Â¼£¨Èç¹û²»´æÔÚ£©
+# åˆ›å»ºè¾“å‡ºç›®å½•ï¼ˆå¦‚æžœä¸å­˜åœ¨ï¼‰
 mkdir -p "$OUTPUT_DIR_Perf"
 mkdir -p "$OUTPUT_DIR_Test"
-# ²éÕÒËùÓÐ _test.go ÎÄ¼þ
+# æŸ¥æ‰¾æ‰€æœ‰ _test.go æ–‡ä»¶
 find "$ROOT_DIR" -name '*_test.go' | while read -r test_file; do
     echo "Processing file: $test_file"
-    # ÌáÈ¡°üÃû
+    # æå–åŒ…å
     pkg=$(dirname "$test_file")
     echo $pkg
-    # ²éÕÒËùÓÐ²âÊÔº¯Êý
+    # æŸ¥æ‰¾æ‰€æœ‰æµ‹è¯•å‡½æ•°
     grep -oP 'func \K(Test\w*)' "$test_file" | while read -r test_func; do
         echo $test_func
-        # Éú³ÉÖ´ÐÐÃüÁî
+        # ç”Ÿæˆæ‰§è¡Œå‘½ä»¤
         cmd="go test -v -run ^$test_func$ $pkg"
         path=$(echo "$pkg" | sed 's:.*/::')
         file="$test_func-$path"
@@ -29,7 +29,7 @@ find "$ROOT_DIR" -name '*_test.go' | while read -r test_file; do
         echo $test_func >>$file.txt
         echo "($pkg)" >>$file.txt
         mv $file.txt $OUTPUT_DIR_Test
-        # µ÷ÓÃ perf ½Å±¾
+        # è°ƒç”¨ perf è„šæœ¬
         ./performance_counter_920.sh "$cmd" "$OUTPUT_DIR_Perf" 
     done
 done
