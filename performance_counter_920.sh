@@ -4,21 +4,23 @@
 # eg:   ./performance_counter.sh "./hackbench -s 512 -l 200 -g 15 -f 25 -P" /home
 
 if [ $# -ne 2 ]; then
-    echo "Usage:  ./performance_counter.sh parameter1 parameter2"
+    echo "Usage:  ./performance_counter.sh parameter1 parameter2 "
     exit 1
 fi
 
 echo "parameter1=$1"
 
-result=$(echo "$1" | sed 's:.*/::')
+result=$(echo "$1" | grep -oP '(?<=\s)\./\S*')
+result1=$(echo "$1" | sed 's:.*/::')
 result2=$(echo "$1" | sed 's/.*^\(.*\)\$.*/\1/')
-file_name="$result-$result2"
+file_name="$result2-$result1"
 echo "file name : $file_name"
-
+echo "path: $result"
 if [ -f "performance.txt" ]; then
     rm -f performance.txt
     echo "performance.txt has been deleted"
 fi
+
 
 perf stat --sync -e duration_time,task-clock,cycles,instructions,cache-references,cache-misses,branches,branch-misses,L1-dcache-loads,L1-dcache-load-misses,LLC-load-misses,LLC-loads -r 1 -o performance.txt $1
 
@@ -83,7 +85,8 @@ if [ -f "$file_name.txt" ]; then
     rm -f $file_name.txt
     echo "$file_name.txt has been deleted"
 fi
-echo $file_name >> $file_name.txt
+echo "$result2" >> $file_name.txt 
+echo "($result)" >> $file_name.txt
 echo $duration_time >> $file_name.txt
 echo $task_clock >> $file_name.txt
 echo $cpu_cycle >> $file_name.txt

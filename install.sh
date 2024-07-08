@@ -97,25 +97,31 @@ cd prometheus || error_exit "Failed to change directory to Prometheus."
 go install golang.org/x/tools/cmd/goyacc
 check_command "go install golang.org/x/tools/cmd/goyacc"
 log "goyacc 安装完成."
-
 log"下载自动化脚本"
-if [ ! -d "arm_test" ]; then
-    git clone https://github.com/Huang-zic/arm_test.git
-    check_command "git clone https://github.com/Huang-zic/arm_test.git"
-    chmod +x -R .
-    log"自动化脚本下载成功"
-else
-    log "脚本已经下载，跳过此步骤."
-fi
-log"将脚本移动到指定目录中"
-mv /home/cloud3/arm_test/run_tests.sh /home/cloud3/prometheus
-mv /home/cloud3/arm_test/performance_counter_920.sh /home/cloud3/prometheus
-chmod +x -R .
+cd ..
+
+git clone https://github.com/Huang-zic/arm_test.git
+check_command"git clone https://github.com/Huang-zic/arm_prometheus_test.git"
+log"自动化脚本下载成功"
+#将脚本移动到指定目录中
+mv /home/cloud3/arm_prometheus_test/install.sh  /home/cloud3
+mv /home/cloud3/arm_prometheus_test/run_tests.sh /home/cloud3/prometheus
+mv /home/cloud3/arm_prometheus_test/performance_counter_920.sh /home/cloud3/prometheus
+mv /home/cloud3/arm_prometheus_test/count_test.py /home/cloud3/prometheus
+mv /home/cloud3/arm_prometheus_test/count_perf.py /home/cloud3/prometheus
 log"赋予执行权限"
-cd /home/cloud3/prometheus
+chmod +x -R .
+
 log"进入Prometheus目录"
-make test  2>&1 | tee test_log.txt
-log"make test结果保存至/home/cloud3/prometheus/test_log.txt"
-log"进行perf测试"
+cd /home/cloud3/prometheus
+
+log"进行test和perf测试"
 ./run_tests.sh
-log "perf结果保存至/home/cloud3/prometheus/perf"
+
+log"测试完成，使用Python脚本进行统计，安装依赖包"
+pip3 install os
+pip3 install pandas
+pip3 install openpyxl
+log"依赖安装成功，开始统计"
+python count_test.py
+python count_perf.py
