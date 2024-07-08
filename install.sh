@@ -44,17 +44,16 @@ else
 fi
 
 
-export PATH=$PATH:./go_golang/go/bin
+export PATH=$PATH:$PWD/go_golang/go/bin
 log "Go 安装完成."
 
-log "赋予go执行权限"
-chmod +x ./go_golang/go/bin/go
+
 # 设置 GOROOT 和 GOPATH
 log "设置 Go 环境变量..."
-go env -w GOROOT=./go_golang/go
-check_command "go env -w GOROOT=./go_golang/go"
-go env -w GOPATH=./go_golang/golang 
-check_command "go env -w GOPATH=./go_golang/golang "
+go env -w GOROOT=$PWD/go_golang/go
+check_command "go env -w GOROOT=$PWD/go_golang/go"
+go env -w GOPATH=$PWD/go_golang/golang 
+check_command "go env -w GOPATH=$PWD/go_golang/golang "
 log "Go 环境变量设置完成."
 
 # 安装 Node.js 和 npm
