@@ -1,4 +1,4 @@
-install.sh为Prometheus安装脚本、进行make test 并保存结果、最后调用run_tests进行perf测试
+install.sh为Prometheus安装及测试脚本脚本，先进行工具的安装，再调用run_tests.sh进行go test和perf测试，最后调用py脚本统计测试结果
 run_tests.sh为go test -v测试以及调用perf脚本的自动化脚本，目的在于分别测试每个测试项
 count_perf.sh为处理run_tests输出文件的Python脚本，将测试结果统计为Excel
 performance_counter_920.sh为perf脚本
