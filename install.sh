@@ -22,7 +22,6 @@ check_command() {
         log "Successfully executed: $1"
     fi
 }
-cd /home/cloud3/
 # 下载 Prometheus
 log "开始下载 Prometheus..."
 if [ ! -d "prometheus" ]; then
@@ -52,7 +51,7 @@ log "赋予go执行权限"
 chmod +x ./go_golang/go/bin/go
 # 设置 GOROOT 和 GOPATH
 log "设置 Go 环境变量..."
-go env -w GOROOT=/home/cloud3/go_golang/go
+go env -w GOROOT=./go_golang/go
 check_command "go env -w GOROOT=./go_golang/go"
 go env -w GOPATH=./go_golang/golang 
 check_command "go env -w GOPATH=./go_golang/golang "
@@ -98,6 +97,7 @@ go install golang.org/x/tools/cmd/goyacc
 check_command "go install golang.org/x/tools/cmd/goyacc"
 log "goyacc 安装完成."
 
+cd ..
 #将脚本移动到指定目录中
 mv run_tests.sh ./prometheus
 mv performance_counter_920.sh ./prometheus
