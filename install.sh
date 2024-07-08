@@ -22,7 +22,7 @@ check_command() {
         log "Successfully executed: $1"
     fi
 }
-
+cd /home/cloud3/
 # 下载 Prometheus
 log "开始下载 Prometheus..."
 if [ ! -d "prometheus" ]; then
@@ -97,12 +97,7 @@ cd prometheus || error_exit "Failed to change directory to Prometheus."
 go install golang.org/x/tools/cmd/goyacc
 check_command "go install golang.org/x/tools/cmd/goyacc"
 log "goyacc 安装完成."
-log"下载自动化脚本"
-cd ..
 
-git clone https://github.com/Huang-zic/arm_test.git
-check_command"git clone https://github.com/Huang-zic/arm_prometheus_test.git"
-log"自动化脚本下载成功"
 #将脚本移动到指定目录中
 mv /home/cloud3/arm_prometheus_test/install.sh  /home/cloud3
 mv /home/cloud3/arm_prometheus_test/run_tests.sh /home/cloud3/prometheus
