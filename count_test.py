@@ -8,7 +8,7 @@ def process_txt_file(file_path,test_name):
     with open(file_path, 'r',errors='ignore') as file:
         lines=file.readlines()
         if(len(lines)<6):
-            print("go test error or no tests\n","file_path:",file_path,"\ntest_name:",test_name)
+            print("go test error or no tests\n","file_path:",line[-1],"\ntest_name:",test_name)
             return 0
         if(count[test_name]>1):
             name=lines[-2].strip()+lines[-1].strip()
