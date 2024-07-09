@@ -112,7 +112,6 @@ log "进行test和perf测试"
 ./run_tests.sh
 
 log "测试完成，使用Python脚本进行统计，安装依赖包"
-pip3 install os
 pip3 install pandas
 pip3 install openpyxl
 log "依赖安装成功，开始统计"
