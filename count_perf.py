@@ -29,7 +29,6 @@ def count_a_occurrences(directory):
         for file in files:
             if file.endswith('.txt'):
                 parts = file.split('-', 1)
-                print(parts)
                 if len(parts) == 2:
                     test_name = parts[0]
                     if test_name in count:
@@ -55,7 +54,7 @@ def main(input_directory, output_file):
 
     # Write DataFrame to an Excel file
     df.to_excel(output_file, index=False)
-
+    print("save perf results success")
 if __name__ == "__main__":
     input_directory = 'perf'  # Change to your directory
     output_file = 'perf_result.xlsx'
