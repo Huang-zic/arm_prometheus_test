@@ -60,7 +60,7 @@ def main(input_directory, output_file):
 
     # Write DataFrame to an Excel file
     df.to_excel(output_file, index=False)
-
+    print("save test results success")
 if __name__ == "__main__":
     input_directory = 'test'  # Change to your directory
     output_file = 'test_result.xlsx'
