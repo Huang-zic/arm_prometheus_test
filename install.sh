@@ -86,7 +86,7 @@ log "NVM 已成功加载."
 
 # 添加 Go 代理
 log "添加 Go 代理..."
-go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/
+go env -w GOPROXY=https://goproxy.cn
 check_command "go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/"
 
 # 安装 goyacc 以解决 make test 报错问题
