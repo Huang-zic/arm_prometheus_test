@@ -3,19 +3,19 @@
 # $1: Complete execution command    $2: store folder for generated file
 # eg:   ./performance_counter.sh "./hackbench -s 512 -l 200 -g 15 -f 25 -P" /home
 
-if [ $# -ne 2 ]; then
-    echo "Usage:  ./performance_counter.sh parameter1 parameter2 "
+if [ $# -ne 3 ]; then
+    echo "Usage:  ./performance_counter.sh parameter1 parameter2 parameter3"
     exit 1
 fi
 
-echo "parameter1=$1"
+echo "parameter1=$1 $3"
 
-result=$(echo "$1" | grep -oP '(?<=\s)\./\S*')
-result1=$(echo "$1" | sed 's:.*/::')
+
+result1=$(echo "$3" | sed -n 's|.*\./\(.*\)\..*|\1|p' | sed 's|/|#|g')
 result2=$(echo "$1" | sed 's/.*^\(.*\)\$.*/\1/')
 file_name="$result2-$result1"
 echo "file name : $file_name"
-echo "path: $result"
+echo "path: $3"
 if [ -f "performance.txt" ]; then
     rm -f performance.txt
     echo "performance.txt has been deleted"
@@ -86,7 +86,7 @@ if [ -f "$file_name.txt" ]; then
     echo "$file_name.txt has been deleted"
 fi
 echo "$result2" >> $file_name.txt 
-echo "($result)" >> $file_name.txt
+echo "($3)" >> $file_name.txt
 echo $duration_time >> $file_name.txt
 echo $task_clock >> $file_name.txt
 echo $cpu_cycle >> $file_name.txt
