@@ -9,7 +9,7 @@ def process_txt_file(file_path,test_name):
     with open(file_path, 'r',errors='ignore') as file:
         lines=file.readlines()
         if(len(lines)<5):
-            print("go test error \n","file_path:",line[-1],"\ntest_name:",test_name)
+            print("go test error \n","file_path:",lines[-1],"\ntest_name:",test_name)
             status='N'
             name=lines[-2].strip()+lines[-1].strip()
             data.append([name,status,lines[0].strip()])
