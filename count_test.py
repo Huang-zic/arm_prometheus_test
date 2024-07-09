@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+print("start processing test results")
 # 创建一个字典来统计每个 `a` 部分出现的次数
 count={}
 def process_txt_file(file_path,test_name):
@@ -8,6 +9,7 @@ def process_txt_file(file_path,test_name):
         lines=file.readlines()
         if(len(lines)<6):
             print("go test error or no tests\n","file_path:",file_path,"\ntest_name:",test_name)
+            return 0
         if(count[test_name]>1):
             name=lines[-2].strip()+lines[-1].strip()
         else:
@@ -60,7 +62,7 @@ def main(input_directory, output_file):
 
     # Write DataFrame to an Excel file
     df.to_excel(output_file, index=False)
-    print("save test results success")
+    print("success save test results to test_result.xlsx")
 if __name__ == "__main__":
     input_directory = 'test'  # Change to your directory
     output_file = 'test_result.xlsx'
