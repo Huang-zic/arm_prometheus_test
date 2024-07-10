@@ -34,7 +34,7 @@ find  -name '*_test.go' | while read -r test_file; do
         # 调用 perf 脚本
         $ROOT_DIR/performance_counter_920.sh "$cmd" "$OUTPUT_DIR_Perf" "$test_file"
         ((COUNT=COUNT+1))
-        echo"Number of tests completed:$COUNT"
+        echo "Number of tests completed:$COUNT"
     done
     cd $ROOT_DIR
 done
