@@ -35,3 +35,4 @@ find  -name '*_test.go' | while read -r test_file; do
     done
     cd $ROOT_DIR
 done
+echo "测试共运行 $(($SECONDS / 3600)) 小时 $(( ($SECONDS % 3600) / 60)) 分钟 $(($SECONDS % 60)) 秒。"
