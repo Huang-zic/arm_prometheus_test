@@ -13,6 +13,7 @@ rm -rf test
 mkdir -p "$OUTPUT_DIR_Perf"
 mkdir -p "$OUTPUT_DIR_Test"
 COUNT=0
+count_file=$(mktemp)  # 创建临时文件来存储计数器
 # 查找所有 _test.go 文件
 find  -name '*_test.go' | while read -r test_file; do
     echo "Processing file: $test_file"
@@ -33,9 +34,16 @@ find  -name '*_test.go' | while read -r test_file; do
         mv $file.txt $OUTPUT_DIR_Test
         # 调用 perf 脚本
         $ROOT_DIR/performance_counter_920.sh "$cmd" "$OUTPUT_DIR_Perf" "$test_file"
-        ((COUNT=COUNT+1))
+        # 更新计数器
+        COUNT=$((COUNT + 1))
+        echo $COUNT > "$count_file"
         echo "Number of tests completed:$COUNT"
     done
     cd $ROOT_DIR
+    COUNT=$(cat "$count_file")
 done
-echo "测试共运行 $(($SECONDS / 3600)) 小时 $(( ($SECONDS % 3600) / 60)) 分钟 $(($SECONDS % 60)) 秒。"
+
+COUNT=$(cat "$count_file")
+rm "$count_file"  
+echo "test costs $(($SECONDS / 3600)) hours $(( ($SECONDS % 3600) / 60)) minutes $(($SECONDS % 60)) seconds。"
+echo "Total number of tests completed: $COUNT"
