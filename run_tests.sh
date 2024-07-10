@@ -26,7 +26,7 @@ find  -name '*_test.go' | while read -r test_file; do
         echo $test_func
         # 生成执行命令
         cmd="go test -v -run ^$test_func$ "
-        path=$(echo "$pkg" | sed 's:.*/::')
+        path=$(echo "$test_file" | sed -n 's|.*\./\(.*\)\..*|\1|p' | sed 's|/|#|g')
         file="$test_func-$path"
         $cmd > $file.txt 2>&1
         echo $test_func >>$file.txt
