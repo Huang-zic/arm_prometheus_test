@@ -12,6 +12,7 @@ rm -rf test
 # 创建输出目录（如果不存在）
 mkdir -p "$OUTPUT_DIR_Perf"
 mkdir -p "$OUTPUT_DIR_Test"
+COUNT=0
 # 查找所有 _test.go 文件
 find  -name '*_test.go' | while read -r test_file; do
     echo "Processing file: $test_file"
@@ -32,6 +33,8 @@ find  -name '*_test.go' | while read -r test_file; do
         mv $file.txt $OUTPUT_DIR_Test
         # 调用 perf 脚本
         $ROOT_DIR/performance_counter_920.sh "$cmd" "$OUTPUT_DIR_Perf" "$test_file"
+        COUNT=$COUNT+1
+        echo"Number of tests completed:$COUNT"
     done
     cd $ROOT_DIR
 done
