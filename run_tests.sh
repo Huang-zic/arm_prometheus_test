@@ -38,6 +38,7 @@ find  -name '*_test.go' | while read -r test_file; do
         COUNT=$((COUNT + 1))
         echo $COUNT > "$count_file"
         echo "Number of tests completed:$COUNT"
+        echo ""
     done
     cd $ROOT_DIR
     COUNT=$(cat "$count_file")
