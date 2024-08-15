@@ -44,7 +44,7 @@ else
 fi
 
 
-export PATH=$PATH:$PWD/go_golang/go/bin
+export PATH=$PWD/go_golang/go/bin:$PATH
 log "Go 安装完成."
 
 
