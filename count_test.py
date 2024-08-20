@@ -8,28 +8,43 @@ def process_txt_file(file_path,test_name):
     data = []
     with open(file_path, 'r',errors='ignore') as file:
         lines=file.readlines()
-        if(len(lines)<5):
+        flag=' '
+        status='Y'
+        test_position=0
+        test_start=lines[0].strip()
+        for i in range(len(lines)):
+            if lines[i].startswith("=== RUN")  :
+                test_start=lines[i].strip()
+                test_position=1
+                break
+            if lines[i].startswith("testing: warning: no tests to run"):
+                test_start=lines[i].strip()
+                break
+        if test_position==1 :
+            for i in range(len(lines)):
+                if lines[i].startswith("--- PASS"):
+                    flag=lines[i].strip()
+                    break
+                elif lines[i].startswith("--- SKIP"):
+                    flag=lines[i].strip()
+                    break
+                elif lines[i].startswith("--- FAIL"):
+                    flag=lines[i].strip()
+                    break
+        if(len(lines)<5 or lines[-4].strip()!='PASS'):
             print("go test error \n","file_path:",lines[-1],"\ntest_name:",test_name)
             status='N'
             name=lines[-2].strip()+lines[-1].strip()
-            data.append([name,status,lines[0].strip()])
+            detail="'"
+            for i in range(len(lines)-2):
+                detail=detail+lines[i].strip()+"\n"
+            data.append([name,status,"'"+test_start+"\n"+lines[-3].strip()+"\n"+flag])
             return data
         if(count[test_name]>1):
             name=lines[-2].strip()+lines[-1].strip()
         else:
             name = lines[-2].strip()
-        
-        if(lines[-4].strip()=='PASS'):
-            status='Y'
-        else:
-            status='N'
-        flag='error'
-        for i in range(len(lines)):
-            if lines[i].startswith("--- PASS"):
-                flag=lines[i].strip()
-            elif lines[i].startswith("--- FAIL"):
-                flag=lines[i].strip()
-        detail="'"+lines[0].strip()+"\n"+flag+"\n"+lines[-4].strip()
+        detail="'"+ test_start+"\n"+flag+"\n"+lines[-4].strip()
         data.append([name,status,detail])
         return data
 
